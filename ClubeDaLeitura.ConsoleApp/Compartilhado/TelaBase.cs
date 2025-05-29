@@ -41,7 +41,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.WriteLine();
         }
 
-        public void CadastrarRegistro()
+        public void Inserir()
         {
             ExibirCabecalho();
 
@@ -64,7 +64,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
                 Console.Write("\nDigite ENTER para continuar...");
                 Console.ReadLine();
 
-                CadastrarRegistro();
+                Inserir();
 
                 return;
             }
@@ -75,7 +75,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.ReadLine();
         }
 
-        public void EditarRegistro()
+        public void Editar()
         {
             ExibirCabecalho();
 
@@ -83,7 +83,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
 
             Console.WriteLine();
 
-            VisualizarRegistros(false);
+            VisualizarTodos(false);
 
             Console.Write("Digite o id do registro que deseja selecionar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -98,7 +98,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.ReadLine();
         }
 
-        public void ExcluirRegistro()
+        public void Excluir()
         {
             ExibirCabecalho();
 
@@ -106,7 +106,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
 
             Console.WriteLine();
 
-            VisualizarRegistros(false);
+            VisualizarTodos(false);
 
             Console.Write("Digite o id do registro que deseja selecionar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -119,7 +119,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.ReadLine();
         }
 
-        public abstract void VisualizarRegistros(bool exibirCabecalho);
+        public abstract void VisualizarTodos(bool exibirCabecalho);
 
         protected abstract EntidadeBase ObterDados();
 
