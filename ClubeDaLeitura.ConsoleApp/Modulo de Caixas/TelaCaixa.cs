@@ -16,7 +16,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas
         public RepositorioAmigo repositorioAmigo;
         public RepositorioEmprestimo repositorioEmprestimo;
         public RepositorioRevista repositorioRevista;
-
+        
 
         public TelaCaixa(RepositorioCaixa repositorioCaixa
             ) : base("Caixa", repositorioCaixa)
@@ -37,7 +37,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas
                 "{0, -10} | {1, -20} | {2, -15} | {3, -15}",
                 "Id", "Etiqueta", "Cor", "Dias de Emprestimo"
             );
-
+           
             EntidadeBase[] caixa = repositorioCaixa.SelecionarTodos();
 
             for (int i = 0; i < caixa.Length; i++)

@@ -32,7 +32,8 @@ namespace ClubeDaLeitura.ConsoleApp
 
             TelaRevista telaRevista = new TelaRevista
        (
-            repositorioRevista
+            repositorioRevista,
+            repositorioCaixa
        );
 
             while (true)
