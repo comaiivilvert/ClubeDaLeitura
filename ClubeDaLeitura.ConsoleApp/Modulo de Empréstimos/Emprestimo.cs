@@ -12,26 +12,44 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
     internal class Emprestimo : EntidadeBase
 
     {
-        Amigo amigo = new Amigo();
-        Revista revista = new Revista();
-        DateTime data;
-        string situacao;
+        public Amigo amigo = new Amigo();
+        public Revista revista = new Revista();
+        public DateTime data;
+        public string situacao; //aberto/concluido/atrasado
 
 
-        public static explicit operator Emprestimo(EntidadeBase v)
+        public Emprestimo(Amigo amigo, Revista revista, string situacao)
+        {
+            this.amigo = amigo;
+            this.revista = revista;
+            this.data = DateTime.Now;
+            this.situacao = situacao;
+        }
+
+
+        public override void AtualizarRegistro(EntidadeBase registroAtualizado)
+        {
+            return;
+        }
+
+        public override string Validar()
+        {
+            string erros = "";
+
+            if (string.IsNullOrWhiteSpace(amigo.nome))
+                erros += "O campo \"NOME\" é obrigatório.\n";
+
+            return erros;
+        }
+
+        public void obterDataDevolucao()
         {
             throw new NotImplementedException();
         }
 
-        public override void AtualizarRegistro(EntidadeBase registroAtualizado)
+        public void registrarDevolucao()
         {
-            Emprestimo emprestimoAtualizado = (Emprestimo)registroAtualizado;
-
-            this.amigo = emprestimoAtualizado.amigo;
-            this.revista = emprestimoAtualizado.revista;
-            this.data = emprestimoAtualizado.data;
-            this.situacao = emprestimoAtualizado.situacao;
+            throw new NotImplementedException();
         }
-
     }
 }

@@ -39,7 +39,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
                     continue;
 
                 Console.WriteLine(
-                    "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
+                    "{0, -10} | {1, -20} | {2, -15} | {3, -15}",
                     a.id, a.nome, a.responsavel, a.telefone
                 );
             }
@@ -57,13 +57,6 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
 
             Console.Write("Digite o telefone do amigo: ");
             string telefone = Console.ReadLine();
-
-            //VisualizarEmprestimos();
-
-            //Console.Write("Digite o ID do empréstimo que deseja selecionar: ");
-            //int idEmprestimo = Convert.ToInt32(Console.ReadLine());
-
-            //Emprestimo emprestimoSelecionado = (Emprestimo)repositorioEmprestimo.SelecionarPorId(idEmprestimo);
 
             Amigo amigo = new Amigo();
             amigo.nome = nome;
@@ -86,7 +79,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
                 "Id", "Amigo", "Revista", "Data", "Situação"
             );
 
-            EntidadeBase[] emprestimos = RepositorioEmprestimo.SelecionarTodos();
+            EntidadeBase[] emprestimos = repositorioEmprestimo.SelecionarTodos();
 
             for (int i = 0; i < emprestimos.Length; i++)
             {

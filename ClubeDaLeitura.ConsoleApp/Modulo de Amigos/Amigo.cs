@@ -1,4 +1,5 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
 {
     public class Amigo : EntidadeBase
     {
-
+        
         public string nome;
         public string responsavel;
         public string telefone;
