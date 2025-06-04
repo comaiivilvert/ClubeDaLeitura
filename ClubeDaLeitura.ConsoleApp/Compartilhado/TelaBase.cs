@@ -31,9 +31,9 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.Write("Digite uma opção válida: ");
             char opcaoEscolhida = Console.ReadLine().ToUpper()[0];
             return opcaoEscolhida;
-
-
         }
+
+
         protected void ExibirCabecalho()
         {
             Console.Clear();

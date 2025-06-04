@@ -1,5 +1,6 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos;
+using ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas;
 using ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,13 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
     internal class Emprestimo : EntidadeBase
 
     {
+
+
         public Amigo amigo = new Amigo();
         public Revista revista = new Revista();
         public DateTime data;
         public string situacao; //aberto/concluido/atrasado
+        public DateTime dataDevolucao;
 
 
         public Emprestimo(Amigo amigo, Revista revista, string situacao)
@@ -24,6 +28,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             this.revista = revista;
             this.data = DateTime.Now;
             this.situacao = situacao;
+            //this.dataDevolucao = data.AddDays(7);
         }
 
 
@@ -44,12 +49,16 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
 
         public void obterDataDevolucao()
         {
-            throw new NotImplementedException();
+            
+            dataDevolucao = data.AddDays(7);
         }
 
         public void registrarDevolucao()
         {
             throw new NotImplementedException();
         }
+
+       
+
     }
 }

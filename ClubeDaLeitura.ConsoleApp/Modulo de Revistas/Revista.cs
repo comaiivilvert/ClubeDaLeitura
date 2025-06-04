@@ -13,7 +13,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas
         public string titulo;
         public int numeroEdicao;
         public int anoPublicacao;
-        public string statusEmprestimo;
+        public string statusEmprestimo = "No Estoque";
         public Caixa caixa;
 
         public override void AtualizarRegistro(EntidadeBase registroAtualizado)

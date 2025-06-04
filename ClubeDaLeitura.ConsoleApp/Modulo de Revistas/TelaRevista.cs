@@ -98,8 +98,8 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas
             Console.Write("Digite o ano de publicação da revista: ");
             int anoPublicacao = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Digite o status do emprestimo desta revista: ");
-            string statusEmprestimo = Console.ReadLine();
+            //Console.Write("Digite o status do emprestimo desta revista: ");
+            //string statusEmprestimo = Console.ReadLine();
 
             VisualizarCaixas();
 
@@ -112,7 +112,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas
             revista.titulo = titulo;
             revista.numeroEdicao = numeroEdicao;
             revista.anoPublicacao = anoPublicacao;
-            revista.statusEmprestimo = statusEmprestimo;
+            //revista.statusEmprestimo = statusEmprestimo;
             revista.caixa = caixaSelecionada;
             return revista;
         }

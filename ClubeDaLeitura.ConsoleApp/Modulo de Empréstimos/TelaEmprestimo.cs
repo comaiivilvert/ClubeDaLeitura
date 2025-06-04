@@ -1,5 +1,6 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos;
+using ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas;
 using ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,14 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
         public RepositorioRevista repositorioRevista;
 
 
-        public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo
+        public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo,
+            RepositorioAmigo repositorioAmigo,
+            RepositorioRevista repositorioRevista
             ) : base("Emprestimo", repositorioEmprestimo)
         {
             this.repositorioEmprestimo = repositorioEmprestimo;
+            this.repositorioAmigo = repositorioAmigo;
+            this.repositorioRevista = repositorioRevista;
         }
 
         public override void VisualizarTodos(bool exibirCabecalho)
@@ -32,7 +37,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             Console.WriteLine();
 
             Console.WriteLine(
-                "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {3, -15}",
+                "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {3, -20}",
                 "Id", "Amigo", "Revista", "Data", "Situação"
             );
 
@@ -47,7 +52,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
 
                 Console.WriteLine(
                     "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
-                    e.id, e.amigo, e.revista, e.data, e.situacao
+                    e.id, e.amigo.nome, e.revista.titulo, e.data, e.situacao
                 );
             }
 
@@ -56,43 +61,119 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
 
         protected override EntidadeBase ObterDados()
         {
+            VisualizarAmigos();
             Console.Write("Digite o id do amigo: ");
-            string IdAmigo = Console.ReadLine();
+            int idAmigo = Convert.ToInt32(Console.ReadLine());
+            Amigo amigoSelecionado = (Amigo)repositorioAmigo.SelecionarPorId(idAmigo);
 
-            Console.Write("Digite o nome da revista: ");
-            string revista = Console.ReadLine();
+            VisualizarRevistas();
+            Console.Write("Digite o ID da revista: ");
+            int idRevista= Convert.ToInt32(Console.ReadLine());
+            Revista revistaSelecionada = (Revista)repositorioRevista.SelecionarPorId(idRevista);
 
-            Console.Write("Digite a situação do emprestimo: (Aberto/Concluído/Atrasado) ");
-            string situacao = Console.ReadLine();
+            string situacao = "Aberto";
+            revistaSelecionada.statusEmprestimo = situacao;
 
-            VisualizarTodos(true);
-
-            Console.Write("Digite o ID do empréstimo que deseja selecionar: ");
-            int idEmprestimo = Convert.ToInt32(Console.ReadLine());
-
-            Emprestimo emprestimoSelecionado = (Emprestimo)repositorioEmprestimo.SelecionarPorId(idEmprestimo);
-
-            Emprestimo emprestimo = new Emprestimo
-                (emprestimoSelecionado.amigo, emprestimoSelecionado.revista, emprestimoSelecionado.situacao);
-
+            Emprestimo emprestimo = new Emprestimo(amigoSelecionado, revistaSelecionada, situacao);
+            
             return emprestimo;
-        }
-
-        public void VisualizarRevistas()
-        {
-
+        
         }
 
         public void VisualizarAmigos()
         {
 
+            Console.WriteLine("Visualização de Amigos");
+
+            Console.WriteLine();
+
+            Console.WriteLine(
+                "{0, -10} | {1, -20} | {2, -15} | {3, -15}",
+                "Id", "Nome", "Responsável", "Telefone"
+            );
+
+            EntidadeBase[] amigo = repositorioAmigo.SelecionarTodos();
+
+            for (int i = 0; i < amigo.Length; i++)
+            {
+                Amigo a = (Amigo)amigo[i];
+
+                if (a == null)
+                    continue;
+
+                Console.WriteLine(
+                    "{0, -10} | {1, -20} | {2, -15} | {3, -15}",
+                    a.id, a.nome, a.responsavel, a.telefone
+                );
+            }
+
+            Console.ReadLine();
         }
 
-        public void RegistrarDevolulcao()
+        public void VisualizarRevistas()
         {
+            Console.WriteLine("Visualização de Revistas");
+
+            Console.WriteLine();
+
+            Console.WriteLine(
+                "{0, -10} | {1, -20} | {2, -10} | {3, -15} | {4, -25} | {5, -20}",
+                "Id", "Título", "Nº Edição", "Ano Publicação", "Status de Empréstimo", "Caixa"
+            );
+
+            EntidadeBase[] revista = repositorioRevista.SelecionarTodos();
+
+            for (int i = 0; i < revista.Length; i++)
+            {
+                Revista r = (Revista)revista[i];
+
+                if (r == null)
+                    continue;
+
+                Console.WriteLine(
+                    "{0, -10} | {1, -20} | {2, -10} | {3, -15} | {4, -25} | {5, -20}",
+                    r.id, r.titulo, r.numeroEdicao, r.anoPublicacao, r.statusEmprestimo, r.caixa.etiqueta
+                );
+            }
+
+            Console.ReadLine();
+        }
+
+        public char ApresentarMenuEmprestimo()
+        {
+            ExibirCabecalho();
+
+            Console.WriteLine($"1 - Cadastro de novo empréstimo");
+            Console.WriteLine($"2 - Visualizar empréstimos Abertos/Concluídos");
+            Console.WriteLine($"3 - Registrar devolução");
+            Console.WriteLine($"S - Sair");
+
+            Console.WriteLine();
+
+            Console.Write("Digite uma opção válida: ");
+            char opcaoEscolhida = Console.ReadLine().ToUpper()[0];
+            return opcaoEscolhida;
+        }
+
+        public void RegistrarDevolucao()
+        {
+            VisualizarTodos(false);
+            Console.Write("Digite o id do empréstimo que deseja devolver: ");
+            int idEmprestimo = Convert.ToInt32(Console.ReadLine());
+            Emprestimo emprestimoSelecionado = (Emprestimo)repositorioEmprestimo.SelecionarPorId(idEmprestimo);
+
+            if (emprestimoSelecionado.situacao == "Aberto" || emprestimoSelecionado.situacao == "Atrasado")
+                emprestimoSelecionado.situacao = "Concluído";
+
+            Revista revistaDevolvida = emprestimoSelecionado.revista;
+            revistaDevolvida.statusEmprestimo = "Em Estoque";
+
 
         }
 
-
+        internal void VisualizarAtrasados()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

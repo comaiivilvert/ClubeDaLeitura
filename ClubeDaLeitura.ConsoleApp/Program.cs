@@ -27,7 +27,9 @@ namespace ClubeDaLeitura.ConsoleApp
 
             TelaEmprestimo telaEmprestimo = new TelaEmprestimo
            (
-                repositorioEmprestimo
+                repositorioEmprestimo,
+                repositorioAmigo,
+                repositorioRevista
            );
 
             TelaRevista telaRevista = new TelaRevista
@@ -99,7 +101,7 @@ namespace ClubeDaLeitura.ConsoleApp
 
                 else if (telaEscolhida == '3')
                 {
-                    char opcaoEscolhida = telaEmprestimo.ApresentarMenu();
+                    char opcaoEscolhida = telaEmprestimo.ApresentarMenuEmprestimo();
 
                     if (opcaoEscolhida == 'S')
                         break;
@@ -115,12 +117,12 @@ namespace ClubeDaLeitura.ConsoleApp
                             break;
 
                         case '3':
-                            telaEmprestimo.Editar();
+                            telaEmprestimo.RegistrarDevolucao();
                             break;
 
-                        case '4':
-                            telaEmprestimo.Excluir();
-                            break;
+                        //case '4':
+                        //    telaEmprestimo.VisualizarAtrasados();
+                        //    break;
                     }
                 }
 
