@@ -67,35 +67,136 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
             return amigo;
         }
 
-        private void VisualizarEmprestimos()
+        public override void Inserir()
         {
+            ExibirCabecalho();
+
+            Console.WriteLine($"Cadastro de {nomeEntidade}");
+
             Console.WriteLine();
 
-            Console.WriteLine("Visualização de Empréstimos");
+            Amigo novoRegistro = (Amigo)ObterDados();
 
-            Console.WriteLine();
+            string erros = novoRegistro.Validar();
 
-            Console.WriteLine(
-                "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
-                "Id", "Amigo", "Revista", "Data", "Situação"
-            );
-
-            EntidadeBase[] emprestimos = repositorioEmprestimo.SelecionarTodos();
-
-            for (int i = 0; i < emprestimos.Length; i++)
+            if (erros.Length > 0)
             {
-                Emprestimo e = (Emprestimo)emprestimos[i];
+                Console.WriteLine();
 
-                if (e == null)
-                    continue;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(erros);
+                Console.ResetColor();
 
-                Console.WriteLine(
-                    "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20} | {5, -15}"
-                    //e.id, e.nome, e.precoAquisicao.ToString("C2"), e.numeroSerie, e.fabricante.nome, e.dataFabricacao.ToShortDateString()
-                );
+                Console.Write("\nDigite ENTER para continuar...");
+                Console.ReadLine();
+
+                Inserir();
+
+                return;
             }
 
+            EntidadeBase[] registros = repositorio.SelecionarTodos();
+
+            for (int i = 0; i < registros.Length; i++)
+            {
+                Amigo amigoRegistrado = (Amigo)registros[i];
+
+                if (amigoRegistrado == null)
+                    continue;
+
+                if (amigoRegistrado.nome == novoRegistro.nome || amigoRegistrado.telefone == novoRegistro.telefone)
+                {
+                    Console.WriteLine();
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Um amigo com este nome ou telefone já foi cadastrado!");
+                    Console.ResetColor();
+
+                    Console.Write("\nDigite ENTER para continuar...");
+                    Console.ReadLine();
+
+                    Inserir();
+                    return;
+                }
+            }
+
+            repositorio.Inserir(novoRegistro);
+
+            Console.WriteLine($"\n{nomeEntidade} cadastrado com sucesso!");
             Console.ReadLine();
         }
+
+        public override void Editar()
+        {
+            ExibirCabecalho();
+
+            Console.WriteLine($"Edição de {nomeEntidade}");
+
+            Console.WriteLine();
+
+            VisualizarTodos(false);
+
+            Console.Write("Digite o id do registro que deseja selecionar: ");
+            int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine();
+
+            Amigo registroAtualizado = (Amigo)ObterDados();
+
+            string erros = registroAtualizado.Validar();
+
+            if (erros.Length > 0)
+            {
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(erros);
+                Console.ResetColor();
+
+                Console.Write("\nDigite ENTER para continuar...");
+                Console.ReadLine();
+
+                Editar();
+
+                return;
+            }
+
+            EntidadeBase[] registros = repositorio.SelecionarTodos();
+
+            for (int i = 0; i < registros.Length; i++)
+            {
+                Amigo amigoRegistrado = (Amigo)registros[i];
+
+                if (amigoRegistrado == null)
+                    continue;
+
+                if (
+                    amigoRegistrado.id != idSelecionado &&
+                    (amigoRegistrado.nome == registroAtualizado.nome ||
+                    amigoRegistrado.telefone == registroAtualizado.telefone)
+                )
+                {
+                    Console.WriteLine();
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Um amigo com este nome ou telefone já foi cadastrado!");
+                    Console.ResetColor();
+
+                    Console.Write("\nDigite ENTER para continuar...");
+                    Console.ReadLine();
+
+                    Editar();
+
+                    return;
+                }
+            }
+
+            repositorio.Editar(idSelecionado, registroAtualizado);
+
+            Console.WriteLine($"\n{nomeEntidade} editado com sucesso!");
+            Console.ReadLine();
+        }
+
+
     }
 }

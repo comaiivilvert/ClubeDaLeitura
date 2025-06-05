@@ -27,7 +27,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
 
             if (telefone.Length < 11 || telefone.Length > 12 )
                 erros += "O campo \"TELEFONE\" está invalido: (XX XXXXXXXX) ou (XX XXXXXXXXX).\n";
-
+            
             return erros;
         }
 

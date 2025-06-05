@@ -41,7 +41,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.WriteLine();
         }
 
-        public void Inserir()
+        public virtual void Inserir()
         {
             ExibirCabecalho();
 
@@ -75,7 +75,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.ReadLine();
         }
 
-        public void Editar()
+        public virtual void Editar()
         {
             ExibirCabecalho();
 
@@ -98,7 +98,7 @@ namespace ClubeDaLeitura.ConsoleApp.Compartilhado
             Console.ReadLine();
         }
 
-        public void Excluir()
+        public virtual void Excluir()
         {
             ExibirCabecalho();
 
