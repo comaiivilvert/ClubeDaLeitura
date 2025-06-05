@@ -1,4 +1,5 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos;
 using ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,16 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas
         public string titulo;
         public int numeroEdicao;
         public int anoPublicacao;
-        public string statusEmprestimo = "No Estoque";
+        public string statusEmprestimo = "Disponível";
         public Caixa caixa;
 
         public override void AtualizarRegistro(EntidadeBase registroAtualizado)
         {
-            throw new NotImplementedException();
+            Revista revistaAtualizada = (Revista)registroAtualizado;
+
+            this.titulo = revistaAtualizada.titulo;
+            this.numeroEdicao = revistaAtualizada.numeroEdicao;
+            this.anoPublicacao= revistaAtualizada.anoPublicacao;
         }
 
         public override string Validar()

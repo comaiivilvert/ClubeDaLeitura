@@ -166,7 +166,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
                 emprestimoSelecionado.situacao = "Concluído";
 
             Revista revistaDevolvida = emprestimoSelecionado.revista;
-            revistaDevolvida.statusEmprestimo = "Em Estoque";
+            revistaDevolvida.statusEmprestimo = "Disponível";
 
 
         }

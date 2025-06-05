@@ -40,6 +40,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
 
                 Console.WriteLine(
                     "{0, -10} | {1, -20} | {2, -15} | {3, -15}",
+                
                     a.id, a.nome, a.responsavel, a.telefone
                 );
             }
