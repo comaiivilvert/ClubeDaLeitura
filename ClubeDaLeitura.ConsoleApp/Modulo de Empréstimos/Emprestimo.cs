@@ -22,7 +22,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
         public DateTime dataDevolucao;
 
 
-        public Emprestimo(Amigo amigo, Revista revista, string situacao)
+        public Emprestimo(Amigo amigo, Revista revista, string situacao, DateTime data)
         {
             this.amigo = amigo;
             this.revista = revista;

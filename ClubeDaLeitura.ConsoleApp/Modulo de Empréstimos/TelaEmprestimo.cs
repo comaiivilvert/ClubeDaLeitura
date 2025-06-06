@@ -74,7 +74,10 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             string situacao = "Aberto";
             revistaSelecionada.statusEmprestimo = situacao;
 
-            Emprestimo emprestimo = new Emprestimo(amigoSelecionado, revistaSelecionada, situacao);
+            DateTime data = DateTime.Now;
+            DateTime dataDevolucao = data.AddDays(revistaSelecionada.caixa.diasEmprestimo);
+
+            Emprestimo emprestimo = new Emprestimo(amigoSelecionado, revistaSelecionada, situacao, data);
             
             return emprestimo;
         
@@ -172,6 +175,175 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             Console.ReadLine();
 
 
+        }
+
+        public override void Inserir()
+        {
+            ExibirCabecalho();
+
+            Console.WriteLine($"Cadastro de {nomeEntidade}");
+
+            Console.WriteLine();
+
+            Emprestimo novoRegistro = (Emprestimo)ObterDados();
+
+            string erros = novoRegistro.Validar();
+
+            if (erros.Length > 0)
+            {
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(erros);
+                Console.ResetColor();
+
+                Console.Write("\nDigite ENTER para continuar...");
+                Console.ReadLine();
+
+                Inserir();
+
+                return;
+            }
+
+            EntidadeBase[] registros = repositorio.SelecionarTodos();
+
+            for (int i = 0; i < registros.Length; i++)
+            {
+                Emprestimo emprestimoRegistrado = (Emprestimo)registros[i];
+
+                if (emprestimoRegistrado == null)
+                    continue;
+
+                if (emprestimoRegistrado.amigo == novoRegistro.amigo)
+                {
+                    Console.WriteLine();
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Já existe um emprestimo em aberto para este amigo!");
+                    Console.ResetColor();
+
+                    Console.Write("\nDigite ENTER para continuar...");
+                    Console.ReadLine();
+
+                    Inserir();
+                    return;
+                }
+            }
+
+
+            repositorio.Inserir(novoRegistro);
+
+            Console.WriteLine($"\n{nomeEntidade} cadastrado com sucesso!");
+            Console.ReadLine();
+        }
+
+        public override void Editar()
+        {
+            ExibirCabecalho();
+
+            Console.WriteLine($"Edição de {nomeEntidade}");
+
+            Console.WriteLine();
+
+            VisualizarTodos(false);
+
+            Console.Write("Digite o id do registro que deseja selecionar: ");
+            int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine();
+
+            Caixa registroAtualizado = (Caixa)ObterDados();
+
+            string erros = registroAtualizado.Validar();
+
+            if (erros.Length > 0)
+            {
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(erros);
+                Console.ResetColor();
+
+                Console.Write("\nDigite ENTER para continuar...");
+                Console.ReadLine();
+
+                Editar();
+
+                return;
+            }
+
+            EntidadeBase[] registros = repositorio.SelecionarTodos();
+
+            for (int i = 0; i < registros.Length; i++)
+            {
+                Caixa caixaRegistrada = (Caixa)registros[i];
+
+                if (caixaRegistrada == null)
+                    continue;
+
+                if (
+                    caixaRegistrada.id != idSelecionado &&
+                    (caixaRegistrada.etiqueta == registroAtualizado.etiqueta)
+                )
+                {
+                    Console.WriteLine();
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Uma caixa com esta etiqueta já foi cadastrado!");
+                    Console.ResetColor();
+
+                    Console.Write("\nDigite ENTER para continuar...");
+                    Console.ReadLine();
+
+                    Editar();
+
+                    return;
+                }
+            }
+        }
+        public override void Excluir()
+        {
+            ExibirCabecalho();
+
+            Console.WriteLine($"Exclusão de {nomeEntidade}");
+
+            Console.WriteLine();
+
+            VisualizarTodos(false);
+
+            Console.Write("Digite o id do registro que deseja selecionar: ");
+            int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+
+            EntidadeBase[] revistas = repositorioRevista.SelecionarTodos();
+
+            for (int i = 0; i < revistas.Length; i++)
+            {
+                Revista r = (Revista)revistas[i];
+
+                if (r == null)
+                    continue;
+                if (r.id == idSelecionado)
+                {
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Não é possivel excluir a Caixa pois ele possui revistas vinculadas");
+                    Console.ResetColor();
+                    Console.Write("\nDigite ENTER para continuar...");
+                    Console.ReadLine();
+
+                    return;
+
+                }
+            }
+
+
+            Console.WriteLine();
+
+            repositorio.Excluir(idSelecionado);
+
+            Console.WriteLine($"\n{nomeEntidade} excluído com sucesso!");
+            Console.ReadLine();
         }
 
         internal void VisualizarAtrasados()
