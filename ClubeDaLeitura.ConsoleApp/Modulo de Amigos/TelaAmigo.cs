@@ -1,5 +1,7 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas;
 using ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
 {
@@ -9,10 +11,10 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
         public RepositorioEmprestimo repositorioEmprestimo;
         
 
-        public TelaAmigo(RepositorioAmigo repositorioAmigo           
-            ) : base("Amigo", repositorioAmigo)
+        public TelaAmigo(RepositorioAmigo repositorioAmigo, RepositorioEmprestimo repositorioEmprestimo) : base("Amigo", repositorioAmigo)
         {
             this.repositorioAmigo = repositorioAmigo;
+            this.repositorioEmprestimo = repositorioEmprestimo;
         }
 
         public override void VisualizarTodos(bool exibirCabecalho)
@@ -59,10 +61,8 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
             Console.Write("Digite o telefone do amigo: ");
             string telefone = Console.ReadLine();
 
-            Amigo amigo = new Amigo();
-            amigo.nome = nome;
-            amigo.responsavel = responsavel;
-            amigo.telefone = telefone;
+            Amigo amigo = new Amigo(nome,responsavel,telefone);
+            
 
             return amigo;
         }
@@ -195,6 +195,51 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
 
             Console.WriteLine($"\n{nomeEntidade} editado com sucesso!");
             Console.ReadLine();
+        }
+
+        public override void Excluir()
+        {
+            ExibirCabecalho();
+
+            Console.WriteLine($"Exclusão de {nomeEntidade}");
+
+            Console.WriteLine();
+
+            VisualizarTodos(false);
+
+            Console.Write("Digite o id do registro que deseja selecionar: ");
+            int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine();
+
+            EntidadeBase[] emprestimos = repositorioEmprestimo.SelecionarTodos();
+
+            for (int i = 0; i < emprestimos.Length; i++)
+            {
+                Emprestimo e = (Emprestimo)emprestimos[i];
+
+                if (e == null)
+                    continue;
+                if (e.amigo.id == idSelecionado)
+                {
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Não é possivel excluir o Amigo pois ele possui emprestimos registrados");
+                    Console.ResetColor();
+                    Console.Write("\nDigite ENTER para continuar...");
+                    Console.ReadLine();
+
+                    return;
+
+                }
+            }
+
+            repositorio.Excluir(idSelecionado);
+
+            Console.WriteLine($"\n{nomeEntidade} excluído com sucesso!");
+            Console.ReadLine();
+
+
         }
 
 

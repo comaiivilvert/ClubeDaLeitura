@@ -14,8 +14,17 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas
         public string titulo;
         public int numeroEdicao;
         public int anoPublicacao;
-        public string statusEmprestimo = "Disponível";
         public Caixa caixa;
+        public string statusEmprestimo;
+
+        public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa)
+        {
+            this.titulo = titulo;
+            this.numeroEdicao = numeroEdicao;
+            this.anoPublicacao = anoPublicacao;
+            statusEmprestimo = "Disponível";
+            this.caixa = caixa;
+        }
 
         public override void AtualizarRegistro(EntidadeBase registroAtualizado)
         {

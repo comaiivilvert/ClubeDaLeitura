@@ -15,8 +15,8 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
     {
 
 
-        public Amigo amigo = new Amigo();
-        public Revista revista = new Revista();
+        public Amigo amigo;
+        public Revista revista;
         public DateTime data;
         public string situacao; //aberto/concluido/atrasado
         public DateTime dataDevolucao;

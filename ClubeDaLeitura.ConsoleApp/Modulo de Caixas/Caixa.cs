@@ -3,6 +3,7 @@ using ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,10 +13,21 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas
     {
         public string etiqueta;
         public string cor;
-        public int diasEmprestimo = 7;
-        Revista revista = new Revista();
+        public int diasEmprestimo;
 
+        public Caixa(string etiqueta, string cor)
+        {
+            this.etiqueta = etiqueta;
+            this.cor = cor;
+            diasEmprestimo = 7;
+        }
 
+        public Caixa(string etiqueta, string cor, int diasEmprestimo)
+        {
+            this.etiqueta = etiqueta;
+            this.cor = cor;
+            this.diasEmprestimo = diasEmprestimo;
+        }
 
         public void AdicionarRevista()
         {
@@ -29,7 +41,11 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas
         }
         public override void AtualizarRegistro(EntidadeBase registroAtualizado)
         {
-            throw new NotImplementedException();
+            Caixa caixaAtualizada = (Caixa)registroAtualizado;
+
+            this.etiqueta = caixaAtualizada.etiqueta;
+            this.cor = caixaAtualizada.cor;
+            this.diasEmprestimo = caixaAtualizada.diasEmprestimo;
         }
 
 
@@ -38,14 +54,14 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Caixas
         {
             string erros = "";
 
-            if (etiqueta.Length > 50)
-                erros += "O campo \"ETIQUETA\" deve conter no máximo 50 caracteres.\n";
+            if(string.IsNullOrWhiteSpace(etiqueta) || etiqueta.Length > 50)
+            erros += "O campo \"Etiqueta\" é obrigatório e recebe no máximo 50 caracteres.";
 
-            else if (cor != "verde" && cor != "preto" && cor != "branco")
-                erros += "O campo \"COR\" Precisa ser Verde/Preto/Branco.\n";
+            if (string.IsNullOrWhiteSpace(cor))
+                erros += "O campo \"Cor\" é obrigatório.";
 
-            if (diasEmprestimo <= 0)
-                erros += "O campo \"DIAS DE EMPRESTIMO\" deve ser um numero positivo.\n";
+            if (diasEmprestimo < 1)
+                erros += "O campo \"Dias de Empréstimo\" deve conter um valor maior que 0.";
 
             return erros;
         }

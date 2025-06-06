@@ -15,6 +15,13 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
         public string responsavel;
         public string telefone;
 
+        public Amigo(string nome, string responsavel, string telefone)
+        {
+            this.nome = nome;
+            this.responsavel = responsavel;
+            this.telefone = telefone;
+        }
+
         public override string Validar()
         {
             string erros = "";

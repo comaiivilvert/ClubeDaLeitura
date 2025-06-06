@@ -108,12 +108,8 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas
 
             Caixa caixaSelecionada = (Caixa)repositorioCaixa.SelecionarPorId(IdCaixa);
 
-            Revista revista = new Revista();
-            revista.titulo = titulo;
-            revista.numeroEdicao = numeroEdicao;
-            revista.anoPublicacao = anoPublicacao;
-            //revista.statusEmprestimo = statusEmprestimo;
-            revista.caixa = caixaSelecionada;
+            Revista revista = new Revista(titulo,numeroEdicao,anoPublicacao,caixaSelecionada);
+
             return revista;
         }
 

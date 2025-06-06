@@ -9,20 +9,29 @@ namespace ClubeDaLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
+            Caixa caixa = new Caixa("Terror", "preto");
+
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
+            repositorioAmigo.Inserir(new Amigo("Arrascaeta","Filipe Luis","49 99913277"));
             RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
+            repositorioCaixa.Inserir(caixa);
             RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
             RepositorioRevista repositorioRevista = new RepositorioRevista();
+            repositorioRevista.Inserir(new Revista("SuperMan", 1, 1990, caixa ));
 
 
             TelaAmigo telaAmigo = new TelaAmigo
             (
-                repositorioAmigo
+                repositorioAmigo,
+                repositorioEmprestimo
             );
 
             TelaCaixa telaCaixa = new TelaCaixa
            (
-               repositorioCaixa
+               repositorioCaixa,
+               repositorioAmigo,
+               repositorioEmprestimo,
+               repositorioRevista
            );
 
             TelaEmprestimo telaEmprestimo = new TelaEmprestimo

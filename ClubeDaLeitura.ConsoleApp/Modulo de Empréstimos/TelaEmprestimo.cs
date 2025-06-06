@@ -168,6 +168,9 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             Revista revistaDevolvida = emprestimoSelecionado.revista;
             revistaDevolvida.statusEmprestimo = "Disponível";
 
+            Console.WriteLine("Empréstimo Concluído... Pressione ENTER para continuar.");
+            Console.ReadLine();
+
 
         }
 
