@@ -10,12 +10,19 @@ namespace ClubeDaLeitura.ConsoleApp
         static void Main(string[] args)
         {
             Caixa caixa = new Caixa("Terror", "preto");
-
+            Amigo amigo = new Amigo("Maicon", "Vilvert", "49 991327377");
+            Revista revista = new Revista("teste", 1, 1990, caixa);
+            DateTime dataTeste = new DateTime(2022, 1, 19);
+           
+            
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
             repositorioAmigo.Inserir(new Amigo("Arrascaeta","Filipe Luis","49 99913277"));
+            
             RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
             repositorioCaixa.Inserir(caixa);
+            
             RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
+            repositorioEmprestimo.Inserir(new Emprestimo(amigo, revista, "Disponivel", dataTeste));
             RepositorioRevista repositorioRevista = new RepositorioRevista();
             repositorioRevista.Inserir(new Revista("SuperMan", 1, 1990, caixa ));
 

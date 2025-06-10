@@ -37,11 +37,13 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             Console.WriteLine();
 
             Console.WriteLine(
-                "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {3, -20}",
+                "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
                 "Id", "Amigo", "Revista", "Data", "Situação"
             );
 
             EntidadeBase[] emprestimo = repositorioEmprestimo.SelecionarTodos();
+
+            
 
             for (int i = 0; i < emprestimo.Length; i++)
             {
@@ -50,12 +52,26 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
                 if (e == null)
                     continue;
 
+                e.obterDataDevolucao();
+
+                if (e.situacao == "Atrasado")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    
+                }
+                else
+                {
+                    Console.ResetColor();
+                }
+
                 Console.WriteLine(
                     "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
                     e.id, e.amigo.nome, e.revista.titulo, e.data, e.situacao
+                    
                 );
+                
             }
-
+            Console.ResetColor();
             Console.ReadLine();
         }
 
@@ -160,10 +176,13 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
 
         public void RegistrarDevolucao()
         {
+            
+
             VisualizarTodos(false);
             Console.Write("Digite o id do empréstimo que deseja devolver: ");
             int idEmprestimo = Convert.ToInt32(Console.ReadLine());
             Emprestimo emprestimoSelecionado = (Emprestimo)repositorioEmprestimo.SelecionarPorId(idEmprestimo);
+           
 
             if (emprestimoSelecionado.situacao == "Aberto" || emprestimoSelecionado.situacao == "Atrasado")
                 emprestimoSelecionado.situacao = "Concluído";
@@ -214,7 +233,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
                 if (emprestimoRegistrado == null)
                     continue;
 
-                if (emprestimoRegistrado.amigo == novoRegistro.amigo)
+                if (emprestimoRegistrado.amigo == novoRegistro.amigo && emprestimoRegistrado.situacao == "Aberto")
                 {
                     Console.WriteLine();
 
@@ -348,7 +367,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
 
         internal void VisualizarAtrasados()
         {
-            throw new NotImplementedException();
+         //IMPLEMENTAR AQI AGORA!!!
         }
     }
 }

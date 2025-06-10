@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
 {
@@ -26,7 +27,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
         {
             this.amigo = amigo;
             this.revista = revista;
-            this.data = DateTime.Now;
+            this.data = data;//DateTime.Now; //ajusta4r aqui 
             this.situacao = situacao;
             //this.dataDevolucao = data.AddDays(7);
         }
@@ -49,8 +50,14 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
 
         public void obterDataDevolucao()
         {
-            
             dataDevolucao = data.AddDays(7);
+            
+            if (DateTime.Now > dataDevolucao)
+            {
+                situacao = "Atrasado";
+
+            }
+            return;
         }
 
         public void registrarDevolucao()
