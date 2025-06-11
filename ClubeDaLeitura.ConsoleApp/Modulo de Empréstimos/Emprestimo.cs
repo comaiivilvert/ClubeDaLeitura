@@ -27,9 +27,8 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
         {
             this.amigo = amigo;
             this.revista = revista;
-            this.data = data;//DateTime.Now; //ajusta4r aqui 
+            this.data = data;//DateTime.Now; //ajustar aqui antes de enviar para professores 
             this.situacao = situacao;
-            //this.dataDevolucao = data.AddDays(7);
         }
 
 

@@ -37,7 +37,7 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             Console.WriteLine();
 
             Console.WriteLine(
-                "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
+                "{0, -10} | {1, -20} | {2, -15} | {3, -25} | {4, -20}",
                 "Id", "Amigo", "Revista", "Data", "Situação"
             );
 
@@ -59,13 +59,17 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
                     Console.ForegroundColor = ConsoleColor.Red;
                     
                 }
-                else
+                else if (e.situacao == "Aberto")
                 {
-                    Console.ResetColor();
-                }
+                    Console.ForegroundColor = ConsoleColor.Blue;
 
+                }
+                else if (e.situacao == "Concluído")
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
                 Console.WriteLine(
-                    "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
+                    "{0, -10} | {1, -20} | {2, -15} | {3, -25} | {4, -20}",
                     e.id, e.amigo.nome, e.revista.titulo, e.data, e.situacao
                     
                 );
@@ -190,7 +194,10 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             Revista revistaDevolvida = emprestimoSelecionado.revista;
             revistaDevolvida.statusEmprestimo = "Disponível";
 
+
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Empréstimo Concluído... Pressione ENTER para continuar.");
+            Console.ResetColor();
             Console.ReadLine();
 
 
@@ -251,8 +258,9 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
 
 
             repositorio.Inserir(novoRegistro);
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"\n{nomeEntidade} cadastrado com sucesso!");
+            Console.ResetColor();
             Console.ReadLine();
         }
 
@@ -360,14 +368,51 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Empréstimos
             Console.WriteLine();
 
             repositorio.Excluir(idSelecionado);
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"\n{nomeEntidade} excluído com sucesso!");
+            Console.ResetColor();
             Console.ReadLine();
         }
 
         internal void VisualizarAtrasados()
         {
-         //IMPLEMENTAR AQI AGORA!!!
+            Console.WriteLine("Visualização de Emprestimos Atrasados");
+
+            Console.WriteLine();
+
+            Console.WriteLine(
+                "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
+                "Id", "Amigo", "Revista", "Data", "Situação"
+            );
+
+            EntidadeBase[] emprestimo = repositorioEmprestimo.SelecionarTodos();
+
+
+
+            for (int i = 0; i < emprestimo.Length; i++)
+            {
+                Emprestimo e = (Emprestimo)emprestimo[i];
+
+                if (e == null)
+                    continue;
+
+                e.obterDataDevolucao();
+
+                if (e.situacao == "Atrasado")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(
+                    "{0, -10} | {1, -20} | {2, -15} | {3, -15} | {4, -20}",
+                    e.id, e.amigo.nome, e.revista.titulo, e.data, e.situacao);
+                }
+                else
+                {
+                    Console.ResetColor();
+                }
+
+            }
+            Console.ResetColor();
+            Console.ReadLine();
         }
     }
 }

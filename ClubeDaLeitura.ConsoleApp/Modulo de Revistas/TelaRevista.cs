@@ -165,8 +165,9 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas
             }
 
             repositorio.Inserir(novoRegistro);
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"\n{nomeEntidade} cadastrado com sucesso!");
+            Console.ResetColor();
             Console.ReadLine();
         }
 
@@ -275,8 +276,9 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Revistas
             Console.WriteLine();
 
             repositorio.Excluir(idSelecionado);
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"\n{nomeEntidade} excluído com sucesso!");
+            Console.ResetColor();
             Console.ReadLine();
         }
 

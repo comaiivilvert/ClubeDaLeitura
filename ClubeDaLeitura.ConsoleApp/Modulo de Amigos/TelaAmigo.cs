@@ -121,8 +121,9 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
             }
 
             repositorio.Inserir(novoRegistro);
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"\n{nomeEntidade} cadastrado com sucesso!");
+            Console.ResetColor();
             Console.ReadLine();
         }
 
@@ -192,8 +193,9 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
             }
 
             repositorio.Editar(idSelecionado, registroAtualizado);
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"\n{nomeEntidade} editado com sucesso!");
+            Console.ResetColor();
             Console.ReadLine();
         }
 
@@ -235,8 +237,9 @@ namespace ClubeDaLeitura.ConsoleApp.Modulo_de_Amigos
             }
 
             repositorio.Excluir(idSelecionado);
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"\n{nomeEntidade} excluído com sucesso!");
+            Console.ResetColor();
             Console.ReadLine();
 
 
