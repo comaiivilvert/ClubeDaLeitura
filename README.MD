@@ -78,9 +78,3 @@ Desenvolvido durante o curso Backend da Academia do Programador 2025
 
 - **.NET SDK** (recomendado .NET 8.0 ou superior) para compilação e execução do projeto.
 
-## Como Utilizar
-
-### Clone o Repositório
-
-```bash
-git clone https://github.com/academiadoprogramador-backend/clube-da-leitura-2025.git
